@@ -1,11 +1,11 @@
-import { Document, model, Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { TProduct, TReview } from './product.interface';
 export const reviewSchema = new Schema<TReview>({
   comment: { type: String },
   rating: { type: Number },
 });
 
-export const productSchema = new Schema<TProduct, Document>(
+export const productSchema = new Schema<TProduct>(
   {
     title: { type: String, required: true },
     image: { type: String, required: true },
@@ -27,11 +27,14 @@ productSchema.pre('save', function (next) {
       (sum, review) => sum + review.rating,
       0,
     );
-    this.averageRating = totalRating / this.reviews.length;
+
+    this.averageRating = parseFloat(
+      (totalRating / this.reviews.length).toFixed(1),
+    );
   } else {
     this.averageRating = 0;
   }
   next();
 });
 
-export const Product = model<TProduct, Document>('Product', productSchema);
+export const Product = model<TProduct>('Product', productSchema);
