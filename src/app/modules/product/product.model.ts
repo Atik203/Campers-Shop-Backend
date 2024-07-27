@@ -16,6 +16,8 @@ export const productSchema = new Schema<TProduct>(
     averageRating: { type: Number, default: 0 },
     brand: { type: String, required: true },
     reviews: [reviewSchema],
+    inStock: { type: Boolean, default: true },
+    size: { type: String },
   },
   {
     timestamps: true,

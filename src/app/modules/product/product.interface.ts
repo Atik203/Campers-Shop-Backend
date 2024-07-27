@@ -13,4 +13,6 @@ export interface TProduct {
   averageRating?: number;
   brand: string;
   reviews?: TReview[];
+  inStock?: boolean;
+  size?: string;
 }
