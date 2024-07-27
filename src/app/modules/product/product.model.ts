@@ -3,6 +3,8 @@ import { TProduct, TReview } from './product.interface';
 export const reviewSchema = new Schema<TReview>({
   comment: { type: String },
   rating: { type: Number },
+  name: { type: String },
+  image: { type: String },
 });
 
 export const productSchema = new Schema<TProduct>(
@@ -12,7 +14,7 @@ export const productSchema = new Schema<TProduct>(
     price: { type: Number, required: true },
     description: { type: String, required: true },
     category: { type: String, required: true },
-    stock: { type: Number, required: true },
+    stock: { type: Number, required: true, default: 0 },
     averageRating: { type: Number, default: 0 },
     brand: { type: String, required: true },
     reviews: [reviewSchema],
