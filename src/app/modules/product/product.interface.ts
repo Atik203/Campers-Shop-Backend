@@ -1,4 +1,6 @@
 export interface TReview {
+  name: string;
+  image: string;
   comment: string;
   rating: number;
 }
