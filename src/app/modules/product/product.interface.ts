@@ -43,7 +43,7 @@ export interface TProduct {
   stock: number;
   averageRating?: number;
   brand: string;
-  reviews?: TReview[];
+  reviews?: TReview;
   inStock?: boolean;
   sizes?: ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   colors?: [
