@@ -1,16 +1,28 @@
 import { model, Schema } from 'mongoose';
-import { TProduct, TReview } from './product.interface';
+import { TAuthorReview, TProduct, TReview } from './product.interface';
+
+export const authorReviewSchema = new Schema<TAuthorReview>({
+  name: { type: String, required: true },
+  image: { type: String, required: true },
+  comment: { type: String, required: true },
+  rating: { type: Number, required: true },
+});
+
 export const reviewSchema = new Schema<TReview>({
-  comment: { type: String },
-  rating: { type: Number },
-  name: { type: String },
-  image: { type: String },
+  totalCounts: { type: Number, required: true },
+  counts: [
+    {
+      rating: { type: Number, required: true },
+      count: { type: Number, required: true },
+    },
+  ],
+  featured: [authorReviewSchema],
 });
 
 export const productSchema = new Schema<TProduct>(
   {
     title: { type: String, required: true },
-    image: { type: String, required: true },
+    images: { type: [String], required: true },
     price: { type: Number, required: true },
     description: { type: String, required: true },
     category: { type: String, required: true },
@@ -19,22 +31,55 @@ export const productSchema = new Schema<TProduct>(
     brand: { type: String, required: true },
     reviews: [reviewSchema],
     inStock: { type: Boolean, default: true },
-    size: { type: String },
+    sizes: { type: [String], enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'] },
+    colors: [
+      {
+        name: { type: String, required: true },
+        hex: { type: String, required: true },
+      },
+    ],
   },
   {
     timestamps: true,
   },
 );
+
 productSchema.pre('save', function (next) {
   if (this.reviews && this.reviews.length > 0) {
-    const totalRating = this.reviews.reduce(
-      (sum, review) => sum + review.rating,
+    const totalRating = this.reviews.reduce((sum, review) => {
+      const featuredRatings = review.featured.reduce(
+        (acc, authorReview) => acc + authorReview.rating,
+        0,
+      );
+      return sum + featuredRatings;
+    }, 0);
+
+    const totalReviews = this.reviews.reduce(
+      (sum, review) => sum + review.featured.length,
       0,
     );
 
-    this.averageRating = parseFloat(
-      (totalRating / this.reviews.length).toFixed(1),
-    );
+    this.averageRating = parseFloat((totalRating / totalReviews).toFixed(1));
+
+    // Update totalCounts and counts for each rating section
+    this.reviews.forEach((review) => {
+      review.totalCounts = review.featured.length;
+      const ratingCounts = review.featured.reduce(
+        (acc: { [key: number]: number }, authorReview) => {
+          acc[authorReview.rating] = (acc[authorReview.rating] || 0) + 1;
+          return acc;
+        },
+        {} as { [key: number]: number },
+      );
+
+      review.counts = [
+        { rating: 1, count: ratingCounts[1] || 0 },
+        { rating: 2, count: ratingCounts[2] || 0 },
+        { rating: 3, count: ratingCounts[3] || 0 },
+        { rating: 4, count: ratingCounts[4] || 0 },
+        { rating: 5, count: ratingCounts[5] || 0 },
+      ];
+    });
   } else {
     this.averageRating = 0;
   }
