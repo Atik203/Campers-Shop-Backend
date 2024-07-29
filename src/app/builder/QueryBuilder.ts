@@ -73,3 +73,6 @@ class QueryBuilder<T> {
 }
 
 export default QueryBuilder;
+
+// expected query params
+// averageRating=1&averageRating=2&averageRating=3&size=S&size=M&category=Bags&category=Clothing&stock=in&stock=out&color=Black&color=Blue&minPrice=49&maxPrice=1000&page=1&limit=6
