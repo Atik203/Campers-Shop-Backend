@@ -45,11 +45,11 @@ const updateProduct = catchAsync(async (req, res) => {
 });
 
 const deleteProduct = catchAsync(async (req, res) => {
-  await productService.deleteProduct(req.params.id);
+  const result = await productService.deleteProduct(req.params.id);
   sendResponse(res, {
     success: true,
-    statusCode: httpStatus.NO_CONTENT,
-    data: null,
+    statusCode: httpStatus.OK,
+    data: result,
     message: 'Product deleted successfully',
   });
 });
