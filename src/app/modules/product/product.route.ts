@@ -9,7 +9,8 @@ router.get('/', productController.getAllProducts);
 
 router.get('/:id', productController.getSingleProduct);
 
-route.delete('/delete/:id', productController.deleteProduct);
-router.put('/update/:id', productController.updateProduct);
+router.delete('/delete-product/:id', productController.deleteProduct);
+
+router.put('/update-product/:id', productController.updateProduct);
 
 export const productRoutes = router;

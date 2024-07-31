@@ -58,7 +58,8 @@ const updateProduct = async (id: string, product: TProduct) => {
 };
 
 const deleteProduct = async (id: string) => {
-  await Product.findByIdAndDelete(id);
+  const result = await Product.findByIdAndDelete(id);
+  return result;
 };
 
 export const productService = {
