@@ -7,12 +7,13 @@ const createOrder = async (order: TOrder) => {
 };
 
 const getAllOrder = async () => {
-  const result = await Order.find();
+  const result = await Order.find().populate('products');
+
   return result;
 };
 
 const getSingleOrder = async (id: string) => {
-  const result = await Order.findById(id);
+  const result = await Order.findById(id).populate('products');
 
   return result;
 };
