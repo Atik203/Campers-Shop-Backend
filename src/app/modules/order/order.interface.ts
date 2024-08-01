@@ -29,6 +29,7 @@ export interface TOrderData {
     productId: string;
     quantity: number;
   }[];
+  status?: 'Pending' | 'Processing' | 'Completed' | 'Cancelled';
 }
 
 export interface TOrder {

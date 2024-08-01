@@ -38,12 +38,22 @@ const orderDataSchema = new Schema({
       quantity: { type: Number, required: true },
     },
   ],
+  status: {
+    type: String,
+    enum: ['Order Placed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
+    default: 'Order Placed',
+  },
 });
 
-const orderSchema = new Schema({
-  products: [{ type: Types.ObjectId, ref: 'Product', required: true }],
-  orderData: { type: orderDataSchema, required: true },
-});
+const orderSchema = new Schema(
+  {
+    products: [{ type: Types.ObjectId, ref: 'Product', required: true }],
+    orderData: { type: orderDataSchema, required: true },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 orderSchema.pre('save', async function (next) {
   try {
