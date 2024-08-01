@@ -11,7 +11,21 @@ const getAllOrder = async () => {
   return result;
 };
 
+const getSingleOrder = async (id: string) => {
+  const result = await Order.findById(id);
+
+  return result;
+};
+
+const deleteOrder = async (id: string) => {
+  const result = await Order.findByIdAndDelete(id);
+
+  return result;
+};
+
 export const orderService = {
   createOrder,
+  deleteOrder,
+  getSingleOrder,
   getAllOrder,
 };
