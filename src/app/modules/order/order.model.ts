@@ -16,7 +16,7 @@ const cardPaymentDetailsSchema = new Schema<TCardPaymentDetails>({
 
 const paymentDetailsSchema = new Schema<TPaymentDetails>({
   paymentType: { type: String, enum: ['COD', 'Stripe'], required: true },
-  cardPaymentDetails: { type: cardPaymentDetailsSchema, required: false },
+  cardPaymentDetails: { type: cardPaymentDetailsSchema, default: null },
 });
 
 const orderDataSchema = new Schema({

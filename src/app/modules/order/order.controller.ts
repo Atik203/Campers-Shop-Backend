@@ -4,7 +4,7 @@ import { sendResponse } from '../../utils/sendResponse';
 import { orderService } from './order.service';
 
 const createOrder = catchAsync(async (req, res) => {
-  const result = orderService.createOrder(req.body);
+  const result = await orderService.createOrder(req.body);
   sendResponse(res, {
     success: true,
     data: result,
@@ -14,8 +14,7 @@ const createOrder = catchAsync(async (req, res) => {
 });
 
 const getAllOrder = catchAsync(async (req, res) => {
-  const result = orderService.getAllOrder();
-
+  const result = await orderService.getAllOrder();
   sendResponse(res, {
     success: true,
     data: result,
@@ -25,8 +24,7 @@ const getAllOrder = catchAsync(async (req, res) => {
 });
 
 const getSingleOrder = catchAsync(async (req, res) => {
-  const result = orderService.getSingleOrder(req.params.id);
-
+  const result = await orderService.getSingleOrder(req.params.id);
   sendResponse(res, {
     success: true,
     data: result,
@@ -37,7 +35,6 @@ const getSingleOrder = catchAsync(async (req, res) => {
 
 const deleteOrder = catchAsync(async (req, res) => {
   const result = orderService.deleteOrder(req.params.id);
-
   sendResponse(res, {
     success: true,
     data: result,
