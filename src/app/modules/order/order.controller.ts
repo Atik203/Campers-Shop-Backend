@@ -24,7 +24,31 @@ const getAllOrder = catchAsync(async (req, res) => {
   });
 });
 
+const getSingleOrder = catchAsync(async (req, res) => {
+  const result = orderService.getSingleOrder(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    data: result,
+    statusCode: httpStatus.OK,
+    message: 'Order fetched successfully',
+  });
+});
+
+const deleteOrder = catchAsync(async (req, res) => {
+  const result = orderService.deleteOrder(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    data: result,
+    statusCode: httpStatus.OK,
+    message: 'Order deleted successfully',
+  });
+});
+
 export const orderController = {
   createOrder,
   getAllOrder,
+  getSingleOrder,
+  deleteOrder,
 };
