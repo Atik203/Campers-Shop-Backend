@@ -4,7 +4,7 @@ export type TCardPaymentDetails = {
   cardLast4: string;
   expireMonth: string;
   expireYear: string;
-  transitionId: string;
+  transactionId: string;
 };
 
 export type TPaymentDetails = {
@@ -25,7 +25,10 @@ export interface TOrderData {
   paymentDetails?: TPaymentDetails;
   time: string;
   orderNumber: string;
-  quantity: number;
+  productQuantity: {
+    productId: string;
+    quantity: number;
+  }[];
 }
 
 export interface TOrder {

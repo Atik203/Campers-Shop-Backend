@@ -52,4 +52,5 @@ export interface TProduct {
       hex: string;
     },
   ];
+  quantity?: number;
 }
