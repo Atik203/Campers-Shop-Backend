@@ -63,7 +63,10 @@ orderSchema.pre('save', async function (next) {
         throw new Error(`Product with ID ${item.productId} not found`);
       }
       product.stock -= item.quantity;
-      if (product.stock < 0) {
+      product.quantity = item.quantity;
+      if (product.stock <= 0) {
+        product.inStock = false;
+        product.stock = 0;
         throw new Error(
           `Insufficient stock for product with ID ${item.productId}`,
         );
