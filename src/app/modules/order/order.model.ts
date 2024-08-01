@@ -7,11 +7,11 @@ import {
 } from './order.interface';
 
 const cardPaymentDetailsSchema = new Schema<TCardPaymentDetails>({
-  brand: { type: String, required: true },
-  cardLast4: { type: String, required: true },
-  expireMonth: { type: String, required: true },
-  expireYear: { type: String, required: true },
-  transitionId: { type: String, required: true },
+  brand: { type: String },
+  cardLast4: { type: String },
+  expireMonth: { type: String },
+  expireYear: { type: String },
+  transactionId: { type: String },
 });
 
 const paymentDetailsSchema = new Schema<TPaymentDetails>({
@@ -32,7 +32,12 @@ const orderDataSchema = new Schema({
   paymentDetails: paymentDetailsSchema,
   time: { type: String, required: true },
   orderNumber: { type: String, required: true },
-  quantity: { type: Number, required: true },
+  productQuantity: [
+    {
+      productId: { type: String, required: true },
+      quantity: { type: Number, required: true },
+    },
+  ],
 });
 
 const orderSchema = new Schema({
@@ -42,14 +47,16 @@ const orderSchema = new Schema({
 
 orderSchema.pre('save', async function (next) {
   try {
-    for (const productId of this.products) {
-      const product = await Product.findById(productId);
+    for (const item of this.orderData.productQuantity) {
+      const product = await Product.findById(item.productId);
       if (!product) {
-        throw new Error(`Product with ID ${productId} not found`);
+        throw new Error(`Product with ID ${item.productId} not found`);
       }
-      product.stock -= this.orderData.quantity;
+      product.stock -= item.quantity;
       if (product.stock < 0) {
-        throw new Error(`Insufficient stock for product with ID ${productId}`);
+        throw new Error(
+          `Insufficient stock for product with ID ${item.productId}`,
+        );
       }
       await product.save();
     }
@@ -58,5 +65,4 @@ orderSchema.pre('save', async function (next) {
     next(error as CallbackError);
   }
 });
-
 export const Order = model<TOrder>('Order', orderSchema);
