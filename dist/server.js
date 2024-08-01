@@ -30,7 +30,8 @@ function main() {
     });
 }
 main();
-process.on('unhandledRejection', () => {
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
     console.log('Shutting down the server due to Unhandled Promise Rejection');
     if (server) {
         server.close(() => {
