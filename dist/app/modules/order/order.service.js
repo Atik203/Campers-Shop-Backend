@@ -23,7 +23,8 @@ const getAllOrder = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield order_model_1.Order.find()
         .populate('products')
         .limit(limitNumber)
-        .skip((pageNumber - 1) * limitNumber);
+        .skip((pageNumber - 1) * limitNumber)
+        .sort({ createdAt: -1 }); // sort by createdAt in descending order
     const totalData = Math.ceil(yield order_model_1.Order.countDocuments());
     return {
         data: result,

@@ -18,7 +18,8 @@ const getAllOrder = async (req: Request) => {
   const result = await Order.find()
     .populate('products')
     .limit(limitNumber)
-    .skip((pageNumber - 1) * limitNumber);
+    .skip((pageNumber - 1) * limitNumber)
+    .sort({ createdAt: -1 }); // sort by createdAt in descending order
 
   const totalData = Math.ceil(await Order.countDocuments());
 
