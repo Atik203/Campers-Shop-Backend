@@ -58,7 +58,7 @@ const updateProduct = async (id: string, product: TProduct) => {
 };
 
 const deleteProduct = async (id: string) => {
-  const result = await Product.findByIdAndDelete(id);
+  const result = await Product.findByIdAndUpdate(id, { isDeleted: true });
   return result;
 };
 

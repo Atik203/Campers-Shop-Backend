@@ -39,6 +39,7 @@ export const productSchema = new Schema<TProduct>(
       },
     ],
     quantity: { type: Number, default: 0 },
+    isDeleted: { type: Boolean, default: false },
   },
   {
     timestamps: true,
@@ -77,6 +78,12 @@ productSchema.pre('save', function (next) {
     this.averageRating = 0;
   }
   next();
+});
+
+// not get the deleted product
+
+productSchema.pre('find', function () {
+  this.where({ isDeleted: { $ne: true } });
 });
 
 export const Product = model<TProduct>('Product', productSchema);

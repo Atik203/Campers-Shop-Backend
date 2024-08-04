@@ -53,4 +53,5 @@ export interface TProduct {
     },
   ];
   quantity?: number;
+  isDeleted?: boolean;
 }
