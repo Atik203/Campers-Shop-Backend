@@ -9,7 +9,6 @@ This repository contains the backend server for the Campers Shop website, provid
 ## Features
 
 - **Product Management**: CRUD operations for managing camping products.
-- **User Authentication**: Secure user registration, login, and authentication using JWT.
 - **Order Processing**: Managing customer orders, including creation, update, and retrieval.
 - **Pagination and Sorting**: Efficiently handle large datasets with pagination and sorting capabilities.
 - **Image Uploads**: Integration with Cloudinary for storing and retrieving product images.
@@ -22,7 +21,6 @@ This repository contains the backend server for the Campers Shop website, provid
 - **MongoDB**: NoSQL database for storing application data.
 - **Mongoose**: ODM for MongoDB to provide a schema-based solution to model data.
 - **JWT**: JSON Web Tokens for secure authentication.
-- **Cloudinary**: Cloud storage service for managing images.
 - **bcrypt**: Library for hashing passwords.
 
 ## Getting Started
@@ -67,11 +65,7 @@ PORT=5000
 DATABASE_URL=mongodb database url
 NODE_ENV=development
 BASE_URL=http://localhost:5000/
-BCRYPT_SALT=12
-JWT_ACCESS_SECRET=lgkjasldfgthsdkhfgkjldashgkljhasdkfhkshdklrthewktrhnjgkalhdfk
-JWT_REFRESH_SECRET=lahg;ahfdslkfh;lksdahfgklasdhgfkhasdkfkldhsakljfghsdahgkads
-JWT_ACCESS_EXPIRATION=7d
-JWT_REFRESH_EXPIRATION=90d
+
 
 ```
 
