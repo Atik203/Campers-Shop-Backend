@@ -56,7 +56,7 @@ const updateProduct = (id, product) => __awaiter(void 0, void 0, void 0, functio
     return result;
 });
 const deleteProduct = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield product_model_1.Product.findByIdAndDelete(id);
+    const result = yield product_model_1.Product.findByIdAndUpdate(id, { isDeleted: true });
     return result;
 });
 exports.productService = {

@@ -8,9 +8,16 @@ const buildProductQuery = (req) => {
         const ratings = Array.isArray(averageRating)
             ? averageRating
             : [averageRating];
-        query.averageRating = {
-            $in: ratings.map((rating) => Math.floor(Number(rating))),
-        };
+        const ratingConditions = ratings.map((rating) => {
+            const ratingValue = Math.floor(Number(rating));
+            return {
+                averageRating: {
+                    $gte: ratingValue,
+                    $lt: ratingValue + 1,
+                },
+            };
+        });
+        query.$or = ratingConditions;
     }
     if (size) {
         const sizes = Array.isArray(size) ? size : [size];

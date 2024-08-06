@@ -37,6 +37,7 @@ exports.productSchema = new mongoose_1.Schema({
         },
     ],
     quantity: { type: Number, default: 0 },
+    isDeleted: { type: Boolean, default: false },
 }, {
     timestamps: true,
 });
@@ -63,5 +64,9 @@ exports.productSchema.pre('save', function (next) {
         this.averageRating = 0;
     }
     next();
+});
+// not get the deleted product
+exports.productSchema.pre('find', function () {
+    this.where({ isDeleted: { $ne: true } });
 });
 exports.Product = (0, mongoose_1.model)('Product', exports.productSchema);
